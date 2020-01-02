@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhangwenlong.librarycms.mapper.AdminMapper">
+
+<!--    管理员登录-->
+    <select id="login" resultType="com.zhangwenlong.librarycms.entity.Admin">
+        select * from admin where name=#{name} and password=#{password}
+    </select>
+<!--    根据ID查询管理员信息-->
+    <select id="selectAdminById" resultType="com.zhangwenlong.librarycms.entity.Admin">
+        select * from admin where id = #{id}
+    </select>
+<!--    根据id修改密码-->
+    <update id="updateAdmin">
+        update admin set password =#{password} where id=#{id}
+    </update>
+<!--    添管理员-->
+    <insert id="insertAdmin">
+        insert into admin(name,password) values (#{name},#{password})
+    </insert>
+
+</mapper>

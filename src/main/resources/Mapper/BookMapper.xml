@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhangwenlong.librarycms.mapper.BookMapper">
+
+<!--    查询所有图书-->
+    <select id="selectBookAll" resultType="com.zhangwenlong.librarycms.entity.Book">
+        select * from book
+    </select>
+<!--    根据ID查询图书-->
+    <select id="selectBookById" resultType="com.zhangwenlong.librarycms.entity.Book">
+        select * from book where id=#{id}
+    </select>
+<!--    添加图书-->
+    <insert id="insertBook" parameterType="com.zhangwenlong.librarycms.entity.Book">
+        insert into book(book_name,book_author,book_price,book_inventory,book_press)
+            values (#{book_name},#{book_author},#{book_price},#{book_press})
+    </insert>
+<!--    根据book实例类选择性修改图书信息-->
+    <update id="updateBook" parameterType="com.zhangwenlong.librarycms.entity.Book">
+        update book
+        <set>
+            <if test="book_name != null">book_name=#{book_name},</if>
+            <if test="book_author != null">book_author=#{book_author},</if>
+            <if test="book_price !=null">book_price=#{book_price},</if>
+            <if test="book_press != null">book_press=#{book_press}</if>
+            <if test="scop!= null">scop=#{scop}</if>
+        </set>
+        where id =#{id}
+    </update>
+<!--    根据ID删除图书-->
+    <delete id="deleteBookById">
+        delete from book where id=#{id}
+    </delete>
+
+</mapper>
