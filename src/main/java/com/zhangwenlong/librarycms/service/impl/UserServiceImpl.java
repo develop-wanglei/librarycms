@@ -33,10 +33,6 @@ public class UserServiceImpl implements UserService {
         return mapper.selectUserAll();
     }
 
-    @Override
-    public User selectUserById(Integer id) {
-        return mapper.selectUserById(id);
-    }
 
     @Override
     public Integer insertUser(String name, String password, Integer sex, String birthday) {
