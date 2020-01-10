@@ -1,5 +1,6 @@
 package com.zhangwenlong.librarycms.control;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.zhangwenlong.librarycms.entity.BorrowBook;
 import com.zhangwenlong.librarycms.service.BorrowBookService;
 import com.zhangwenlong.librarycms.util.RestfulUtil;
@@ -27,21 +28,40 @@ public class BorrowBookController {
     @Autowired
     private RestfulUtil res;
 
-    @RequestMapping(value = "/select",method =RequestMethod.POST)
-    public String select(){
-        List<BorrowBook> borrowBooks = borrowBookService.selectAll();
-        if (borrowBooks!=null){
-            return res.success(borrowBooks);
-        }
-        return res.error("未查询到数据");
-    }
 //    借书
-    @RequestMapping(value = "/add",method = RequestMethod.POST)
+    @RequestMapping(value = "/borrow",method = RequestMethod.POST)
     public String add(BorrowBook borrowBook){
         Integer i = borrowBookService.add(borrowBook);
         if (i>0){
             return res.success(i);
         }
         return res.error("添加失败");
+    }
+//    还书
+    @RequestMapping(value = "/return" ,method = RequestMethod.POST)
+    public String returnBook(Integer borrowBook_id,Integer book_id){
+        Integer i = borrowBookService.updateScop(borrowBook_id, book_id);
+        if (i>1){
+            return res.success(i);
+        }
+        return res.error("还书失败，稍后重试");
+    }
+//    用户查看借书信息
+    @RequestMapping(value = "/getBorrowBook",method = RequestMethod.POST)
+    public String get(Integer user_id){
+        List<BorrowBook> borrowBook = borrowBookService.getBorrowBook(user_id);
+        if (borrowBook.size()!=0){
+            return res.success(borrowBook);
+        }
+        return res.error("未借书");
+    }
+//    书被哪些用户借阅(管理员查看借书记录)
+    @RequestMapping(value = "/select",method = RequestMethod.POST)
+    public String select(){
+        List<BorrowBook> list = borrowBookService.selectBorrowBookAll();
+        if (list.size()>0){
+            return res.success(list);
+        }
+        return res.error("查询失败，请稍后重试");
     }
 }

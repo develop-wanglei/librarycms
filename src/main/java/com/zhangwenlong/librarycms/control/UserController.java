@@ -37,15 +37,7 @@ public class UserController {
         }
         return res.error("用户名或密码错误");
     }
-//    获取用户信息和用户的借书信息
-    @RequestMapping(value = "/getUserBook",method = RequestMethod.POST)
-    public String getUserBook(Integer id){
-        User user = userService.selectUserById(id);
-        if (user!=null){
-            return res.success(user);
-        }
-        return res.error("未查询到数据");
-    }
+
 //    添加用户信息
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     public String add(String name,String password,Integer sex,String birthday){

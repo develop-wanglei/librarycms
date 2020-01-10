@@ -2,32 +2,66 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zhangwenlong.librarycms.mapper.BorrowBookMapper">
 
-    <resultMap id="borrow_book_Info" type="com.zhangwenlong.librarycms.entity.BorrowBook">
+<!--    <resultMap id="borrow_book_Info" type="com.zhangwenlong.librarycms.entity.BorrowBook">-->
+<!--        <id column="id" property="id"/>-->
+<!--        <result column="user_id" property="user_id"/>-->
+<!--        <result column="book_id" property="book_id"/>-->
+<!--        <result column="start_time" property="start_time"/>-->
+<!--        <result column="end_time" property="end_time"/>-->
+<!--        <collection property="book" select="getBook" ofType="com.zhangwenlong.librarycms.entity.Book"  column="book_id">-->
+<!--            -->
+<!--        </collection>-->
+<!--        <collection property="user" select="getUser" column="user_id" ofType="com.zhangwenlong.librarycms.entity.User">-->
+
+<!--        </collection>-->
+<!--    </resultMap>-->
+    <resultMap id="book_info" type="com.zhangwenlong.librarycms.entity.BorrowBook">
         <id column="id" property="id"/>
         <result column="user_id" property="user_id"/>
         <result column="book_id" property="book_id"/>
         <result column="start_time" property="start_time"/>
         <result column="end_time" property="end_time"/>
-        <collection property="book" select="getBook" ofType="com.zhangwenlong.librarycms.entity.Book"  column="book_id">
-            
-        </collection>
-        <collection property="user" select="getUser" column="user_id" ofType="com.zhangwenlong.librarycms.entity.User">
+        <result column="scop" property="scop"/>
+<!--        多对多查询，查询到当前用户借了几本书的ID，在根据这几个书的ID去查询书的详细信息-->
+        <collection select="getBook"  property="book" ofType="com.zhangwenlong.librarycms.entity.Book" column="book_id">
 
         </collection>
     </resultMap>
-
-    <select id="selectAll" resultMap="borrow_book_Info">
-        select * from borrow_book;
-    </select>
-    <select id="getBook" resultType="com.zhangwenlong.librarycms.entity.Book">
+<!--    根据借书表的Book_id查询book表的图书信息-->
+    <select id="getBook" resultType="com.zhangwenlong.librarycms.entity.Book" >
         select * from book where id=#{book_id}
     </select>
-    <select id="getUser" resultType="com.zhangwenlong.librarycms.entity.User">
-        select * from user where id =#{user_id};
+<!--    根据用户ID查看借书表的信息-->
+    <select id="getBorrowBook" resultMap="book_info" >
+        select * from borrow_book where user_id =#{user_id} and scop!=-1;
     </select>
 
-<!--    借书-->
+<!--    借书，把借书的数据插入借书表中-->
     <insert id="add" parameterType="BorrowBook">
         insert into borrow_book(user_id,book_id,start_time,end_time) values (#{user_id},#{book_id},#{start_time},#{end_time})
     </insert>
+<!--    还书，把借书表的scop(有效性)字段改成 -1 -->
+    <update id="updateScop">
+        update borrow_book set scop = -1 where id=#{id}
+    </update>
+
+
+    <resultMap id="borrow_book_info" type="com.zhangwenlong.librarycms.entity.BorrowBook">
+        <id column="id" property="id"/>
+        <result column="user_id" property="user_id"/>
+        <result column="book_id" property="book_id"/>
+        <result column="start_time" property="start_time"/>
+        <result column="end_time" property="end_time"/>
+        <result column="scop" property="scop"/>
+        <association property="user" column="user_id" select="getUser"/>
+        <association property="book" column="book_id" select="getBook"/>
+    </resultMap>
+<!--    管理员查看借书记录-->
+    <select id="selectBorrowBookAll" resultMap="borrow_book_info" >
+        select * from borrow_book
+    </select>
+    <select id="getUser" resultType="com.zhangwenlong.librarycms.entity.User" >
+        select * from user where id=#{user_id}
+    </select>
+
 </mapper>

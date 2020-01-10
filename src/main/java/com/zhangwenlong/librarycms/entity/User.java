@@ -15,17 +15,15 @@ public class User {
     private String password;
     private Integer sex;
     private String birthday;
-    private List<Map<String,Object>> borrowBook;
     public User() {
     }
 
-    public User(Integer id, String name, String password, Integer sex, String birthday, List<Map<String, Object>> borrowBook) {
+    public User(Integer id, String name, String password, Integer sex, String birthday) {
         this.id = id;
         this.name = name;
         this.password = password;
         this.sex = sex;
         this.birthday = birthday;
-        this.borrowBook = borrowBook;
     }
 
     public Integer getId() {
@@ -66,26 +64,5 @@ public class User {
 
     public void setBirthday(String birthday) {
         this.birthday = birthday;
-    }
-
-    public List<Map<String, Object>> getBorrowBook() {
-        return borrowBook;
-    }
-
-    public void setBorrowBook(List<Map<String, Object>> borrowBook) {
-        this.borrowBook = borrowBook;
-    }
-
-    @Override
-    public String
-    toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", password='" + password + '\'' +
-                ", sex=" + sex +
-                ", birthday='" + birthday + '\'' +
-                ", borrowBook=" + borrowBook +
-                '}';
     }
 }

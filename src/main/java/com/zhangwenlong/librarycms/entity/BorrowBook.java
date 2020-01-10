@@ -9,6 +9,7 @@ import java.util.List;
  * @author: wanglei
  * @create: 2019-12-30 13:24
  **/
+
 public class BorrowBook {
     private Integer id;
     private Integer user_id;
@@ -16,21 +17,21 @@ public class BorrowBook {
     private String start_time;
     private String end_time;
     private Integer scop;
-    private Book book;
     private User user;
+    private Book book;
 
     public BorrowBook() {
     }
 
-    public BorrowBook(Integer id, Integer user_id, Integer book_id, String start_time, String end_time, Integer scop, Book book, User user) {
+    public BorrowBook(Integer id, Integer user_id, Integer book_id, String start_time, String end_time, Integer scop, User user, Book book) {
         this.id = id;
         this.user_id = user_id;
         this.book_id = book_id;
         this.start_time = start_time;
         this.end_time = end_time;
         this.scop = scop;
-        this.book = book;
         this.user = user;
+        this.book = book;
     }
 
     public Integer getId() {
@@ -81,19 +82,19 @@ public class BorrowBook {
         this.scop = scop;
     }
 
-    public Book getBook() {
-        return book;
-    }
-
-    public void setBook(Book book) {
-        this.book = book;
-    }
-
     public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
     }
 }

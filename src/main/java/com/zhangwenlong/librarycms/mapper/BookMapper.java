@@ -12,4 +12,5 @@ public interface BookMapper {
     Integer insertBook(Book book);
     Integer updateBook(Book book);
     Integer deleteBookById(Integer id);
+    Integer updateScop(Integer scop,Integer id);
 }

@@ -10,4 +10,5 @@ public interface BookService {
     Integer insertBook(Book book);
     Integer updateBook(Book book);
     Integer deleteBookById(Integer id);
+
 }

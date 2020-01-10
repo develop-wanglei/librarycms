@@ -1,34 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zhangwenlong.librarycms.mapper.UserMapper">
-    <resultMap id="resUserBook" type="com.zhangwenlong.librarycms.entity.User">
-        <id column="id" property="id"/>
-        <result column="name" property="name"/>
-        <result column="password" property="password"/>
-        <result column="sex" property="sex"/>
-        <result column="birthday" property="birthday"/>
-        <collection select="getBorrowBook" property="borrowBook" ofType="com.zhangwenlong.librarycms.entity.BorrowBook" column="id" >
-        </collection>
-    </resultMap>
-    <resultMap id="resBorrowBook" type="java.util.HashMap">
-        <id column="id" property="id"/>
-        <result column="user_id" property="user_id"/>
-        <result column="book_id" property="book_id"/>
-        <result column="start_time" property="start_time"/>
-        <result column="end_time" property="end_time"/>
-        <association select="getBook" property="book" javaType="com.zhangwenlong.librarycms.entity.Book" column="book_id">
 
-        </association>
-    </resultMap>
 
-<!--    根据BorrowBook表中的book_id查询book的详细信息-->
-    <select id="getBook" resultType="com.zhangwenlong.librarycms.entity.Book">
-        select * from book where id = #{book_id}
-    </select>
-<!--    根据用户ID查询book-->
-    <select id="getBorrowBook" resultMap="resBorrowBook" >
-        select * from borrow_book where user_id=#{id}
-    </select>
 <!--    登录，根据用户名和密码判断数据库是否存在-->
     <select id="login" resultType="com.zhangwenlong.librarycms.entity.User">
         select * from user where name=#{name} and password=#{password}
@@ -37,10 +11,7 @@
     <select id="selectUserAll" resultType="com.zhangwenlong.librarycms.entity.User">
         select * from user
     </select>
-<!--    根据ID查询用户数据-->
-    <select id="selectUserById" resultMap="resUserBook">
-        select * from user where id = #{id}
-    </select>
+
 <!--    添加新用户，id是数据库自增，不需要传值-->
     <insert id="insertUser" >
         insert into user(name,password,sex,birthday) values (#{name},#{password},#{sex},#{birthday})

@@ -27,6 +27,10 @@
         </set>
         where id =#{id}
     </update>
+<!--    修改图书的scop状态-->
+    <update id="updateScop">
+        update book set scop =#{scop} where id=#{id}
+    </update>
 <!--    根据ID删除图书-->
     <delete id="deleteBookById">
         delete from book where id=#{id}

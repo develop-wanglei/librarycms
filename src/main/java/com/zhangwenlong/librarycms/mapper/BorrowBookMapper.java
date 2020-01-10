@@ -9,6 +9,8 @@ import java.util.List;
 @Mapper
 public interface BorrowBookMapper {
 
-    List<BorrowBook> selectAll();
+    List<BorrowBook> getBorrowBook(Integer user_id);
     Integer add(BorrowBook borrowBook);
+    Integer updateScop(Integer id);
+    List<BorrowBook> selectBorrowBookAll();
 }

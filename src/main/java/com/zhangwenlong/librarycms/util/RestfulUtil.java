@@ -1,7 +1,12 @@
 package com.zhangwenlong.librarycms.util;
 
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.springframework.stereotype.Component;
+
+import java.util.HashMap;
+
 
 @Component
 public class RestfulUtil {
@@ -12,10 +17,15 @@ public class RestfulUtil {
      */
     public  String success(Object obj){
         JSONObject json = new JSONObject();
-        json.put("code",0);
-        json.put("data",obj);
-        json.put("msg","操作成功");
-        return json.toString();
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("code",0);
+        map.put("data",obj);
+        map.put("msg","操作成功");
+//        json.put("code",0);
+//        json.put("data",obj);
+//        json.put("msg","操作成功");
+        //SerializerFeature.DisableCircularReferenceDetect fastjson 关闭循环引用 防止（$ref": "$.data）
+        return json.toJSONString(map, SerializerFeature.DisableCircularReferenceDetect);
     }
 
     /**
